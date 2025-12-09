@@ -1,6 +1,6 @@
 # [Calibrating Verbalized Confidence with Self-Generated Distractors](https://arxiv.org/abs/2509.25532)
 
-Authors: [Victor Wang](https://dubai03nsr.github.io/), [Elias Stengel-Eskin](https://esteng.github.io/)
+Authors: [Victor Wang](https://victorwang37.github.io/), [Elias Stengel-Eskin](https://esteng.github.io/)
 
 ![fig1](figs/method.png)
 
