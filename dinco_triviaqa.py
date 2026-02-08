@@ -115,7 +115,7 @@ def lexical_cleaning(beam_strs, beam_lls):
     return beam_strs, filtered_beam_lls
 
 def get_ptrue(ds, model, tokenizer, beam_strs):
-    ptrues = -torch.ones(n_qst, max([len(strs) for strs in beam_strs]))
+    ptrues = -torch.ones(len(ds), max([len(strs) for strs in beam_strs]))
 
     option_tok_ids = tokenizer.convert_tokens_to_ids(['Yes', 'No'])
 
@@ -238,7 +238,7 @@ def sample_generations(ds, model, tokenizer, n_sample=5, max_new_tokens=100):
 
     return sampled_strs
 
-def run_sc_nli(main_strs, sampled_strs):
+def run_sc_nli(ds, main_strs, sampled_strs):
     nli_model_name = "MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli"
     nli_tokenizer = AutoTokenizer.from_pretrained(nli_model_name)
     nli_model = AutoModelForSequenceClassification.from_pretrained(nli_model_name, device_map='auto')
@@ -359,7 +359,7 @@ if __name__ == "__main__":
 
     # compute self-consistency matches
     main_strs = [strs[0] for strs in beam_strs] # highest probability generation
-    sc_nlis = run_sc_nli(main_strs, sampled_strs)
+    sc_nlis = run_sc_nli(ds, main_strs, sampled_strs)
     # save
     torch.save(sc_nlis, f'{results_fstem}/sc_nlis.pth')
     print('Saved self-consistency NLI results', flush=True)

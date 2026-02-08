@@ -285,7 +285,7 @@ def sample_generations(decomps, model, tokenizer, n_sample=5, max_new_tokens=500
 
     return sampled_strs
 
-def run_sc_nli(decomps, sampled_strs):
+def run_sc_nli(decomps, model, tokenizer, sampled_strs):
     def get_options():
         text_options = ['Support', 'Refute', 'No Mention']
         token_options = torch.zeros(len(text_options), dtype=torch.long)
@@ -407,7 +407,7 @@ if __name__ == "__main__":
     print('Saved sampled generations', flush=True)
 
     # compute self-consistency matches
-    sc_nlis = run_sc_nli(decomps, sampled_strs)
+    sc_nlis = run_sc_nli(decomps, model, tokenizer, sampled_strs)
     # save
     torch.save(sc_nlis, f'{results_fstem}/sc_nlis.pth')
     print('Saved self-consistency NLI results', flush=True)
